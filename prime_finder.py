@@ -2,6 +2,24 @@ from decimal import *
 
 class PrimeFinder:
 
+    def __init__(self, precision=170):
+        self.set_precision(precision)
+        self.eulers_string = str(Decimal(1).exp())
+
+    @staticmethod
+    def set_precision(precision):
+        getcontext().prec = precision
+
+    def prime_of_length(self, count, size):
+        total_count = 0
+        for n in range(2, len(self.eulers_string) - size):
+            number = int(self.eulers_string[n: n + size])
+            if self.is_prime(number):
+                total_count += 1
+            if total_count == count:
+                return number
+        return -1
+
     @staticmethod
     def is_prime(num):
         if num == 2 or num == 3:
@@ -21,7 +39,10 @@ class PrimeFinder:
             x += 6
         return True
 
-user_input = int(raw_input("Enter a number to check for primality: "))
+user_input = raw_input("Enter x and y to find xth y-tuple prime in Euler's Number: ").split()
+finder = PrimeFinder()
+occurrence = int(user_input[0])
+tuple = int(user_input[1])
 
-print "Is it prime?", PrimeFinder.is_prime(user_input)
+print "%dth %d-digit prime: " % (occurrence, tuple), finder.prime_of_length(occurrence, tuple)
 
