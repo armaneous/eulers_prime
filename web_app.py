@@ -34,11 +34,18 @@ def upload():
     if request.method == 'POST':
         for line in request.files['tuples']:
             csv_tuple = line.split(',')
-            results.append({
-                'occurrence': csv_tuple[0],
-                'digits': csv_tuple[1],
-                'value': compute(csv_tuple[0], csv_tuple[1])
-            })
+            if len(csv_tuple) > 1:
+                results.append({
+                    'occurrence': csv_tuple[0],
+                    'digits': csv_tuple[1],
+                    'value': compute(csv_tuple[0], csv_tuple[1])
+                })
+            else:
+                results.append({
+                    'occurrence': csv_tuple[0],
+                    'digits': '??',
+                    'value': compute(csv_tuple[0], 0)
+                })
     return render_template(
         'home.html',
         results=results
@@ -57,8 +64,13 @@ def compute(occurrence, digits):
         )
 
     if occurrence > 0 and digits > 0:
+        result = finder.prime_of_length(occurrence, digits)
+
+        if result < 0:
+            result = "Sorry, couldn't find that with current precision"
+
         return Markup(
-            "<em>%d</em>" % finder.prime_of_length(occurrence, digits)
+            "<em>%s</em>" % str(result)
         )
 
     return Markup(
