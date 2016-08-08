@@ -11,8 +11,15 @@
         </section>
 		<form method="post" action="/">
 			<input name="occurrence" type="number" placeholder="Xth occurrence">
-			<input name="tuple" type="number" placeholder="Y tuple">
+			<input name="digits" type="number" placeholder="Y tuple">
 			<input name="submit" type="Submit" value="Find it">
 		</form>
+        <div id="response">
+            {% if result %}
+                {{ occurrence }}th occurrence of {{ digits }}-digit is {{ result }}
+            {% elif error %}
+                {{ error }}
+            {%  endif %}
+        </div>
 	</body>
 </html>
