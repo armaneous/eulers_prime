@@ -9,15 +9,35 @@
             <p>This program is intended to determine the Xth occurrence of Y-tuple prime number.</p>
             <p>For example, given two integer parameters, 3 and 5, the result will be the 3rd occurrence of a 5-digit prime in Euler's Number.</p>
         </section>
+        <!--
+            Form for entering two values by inputs. Limit, as much as possible,
+            the type of values that can be input to numbers that are greater
+            than 1; there is no maximum.
+        -->
 		<form method="post" action="/">
 			<input name="occurrence" type="number" min="1" placeholder="Xth occurrence">
 			<input name="digits" type="number" min="1" placeholder="Y tuple">
 			<input name="submit" type="Submit" value="Find it">
 		</form>
+        <!--
+            Form for allowing the user to upload a file of type .txt, .text or
+            .csv and allowing a search based on a multi-line file of comma-
+            separated tuples. Tuples should be of size 2 and the first number
+            will be the occurrence count while the second will be the digit
+            count.
+        -->
 		<form method="post" action="/upload" enctype="multipart/form-data">
-            <input name="tuples" type="file" accept="text/csv" placeholder="Upload a CSV">
+            <input name="tuples" type="file" accept=".txt, .text, .csv" placeholder="Upload a CSV">
 			<input name="submit" type="Submit" value="Find it">
 		</form>
+
+        <!--
+            Returns messages appropriate to the values available. If there's
+            a result, return the result and the tuple entered to get there.
+            If there's a list of results, loop through the list and return
+            appropriate values. However, if there's an error message, print
+            the error message for the user.
+        -->
         <div id="response">
             {% if result %}
                 <p>Tuple: {{ occurrence }}, {{ digits }} => {{ result }}</p>
