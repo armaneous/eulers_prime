@@ -3,7 +3,7 @@ from decimal import *
 
 class PrimeFinder:
 
-    def __init__(self, precision=170):
+    def __init__(self, precision=200):
         self.set_precision(precision)
         self.eulers_string = str(Decimal(1).exp())
 
