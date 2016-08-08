@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Markup
 from prime_finder import PrimeFinder
 
 # EB looks for an 'application' callable by default.
@@ -17,12 +17,12 @@ def home():
 
 
 # Enable REST calls directly to computation
-@application.route('/<occurrence>/<digits>')
+@application.route('/<int:occurrence>/<int:digits>')
 def rest_compute(occurrence, digits):
     return render_template(
         'home.html',
         occurrence=occurrence,
-        tuple=digits,
+        digits=digits,
         result=compute(occurrence, digits)
     )
 
@@ -41,9 +41,18 @@ def compute(occurrence, digits):
         occurrence = int(occurrence)
         digits = int(digits)
     except ValueError:
-        return "Error: input values must be integers"
+        return Markup(
+            "<strong>Error: both values must be valid integers</strong>"
+        )
 
-    return finder.prime_of_length(occurrence, digits)
+    if occurrence > 0 and digits > 0:
+        return Markup(
+            "<em>%d</em>" % finder.prime_of_length(occurrence, digits)
+        )
+
+    return Markup(
+        "<strong>Error: values must be positive integers</strong>"
+    )
 
 
 # run the app.

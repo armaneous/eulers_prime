@@ -10,13 +10,13 @@
             <p>For example, given two integer parameters, 3 and 5, the result will be the 3rd occurrence of a 5-digit prime in Euler's Number.</p>
         </section>
 		<form method="post" action="/">
-			<input name="occurrence" type="number" placeholder="Xth occurrence">
-			<input name="digits" type="number" placeholder="Y tuple">
+			<input name="occurrence" type="number" min="1" placeholder="Xth occurrence">
+			<input name="digits" type="number" min="1" placeholder="Y tuple">
 			<input name="submit" type="Submit" value="Find it">
 		</form>
         <div id="response">
             {% if result %}
-                {{ occurrence }}th occurrence of {{ digits }}-digit is {{ result }}
+                Tuple: {{ occurrence }}, {{ digits }} => {{ result }}
             {% elif error %}
                 {{ error }}
             {%  endif %}
