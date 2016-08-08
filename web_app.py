@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, Markup
 from prime_finder import PrimeFinder
 
-# EB looks for an 'application' callable by default.
+# Declare and initialize application
 application = Flask(__name__)
 
 
@@ -30,8 +30,26 @@ def rest_compute(occurrence, digits):
 # Enable upload calls
 @application.route('/upload', methods=['POST', 'GET'])
 def upload():
-     # TODO implement file upload
-    return "Don't forget to implement me!"
+    results = []
+    if request.method == 'POST':
+        for line in request.files['tuples']:
+            csv_tuple = line.split(',')
+            if len(csv_tuple) > 1:
+                results.append({
+                    'occurrence': csv_tuple[0],
+                    'digits': csv_tuple[1],
+                    'value': compute(csv_tuple[0], csv_tuple[1])
+                })
+            else:
+                results.append({
+                    'occurrence': csv_tuple[0],
+                    'digits': '??',
+                    'value': compute(csv_tuple[0], 0)
+                })
+    return render_template(
+        'home.html',
+        results=results
+    )
 
 
 def compute(occurrence, digits):
@@ -46,8 +64,13 @@ def compute(occurrence, digits):
         )
 
     if occurrence > 0 and digits > 0:
+        result = finder.prime_of_length(occurrence, digits)
+
+        if result < 0:
+            result = "Sorry, couldn't find that with current precision"
+
         return Markup(
-            "<em>%d</em>" % finder.prime_of_length(occurrence, digits)
+            "<em>%s</em>" % str(result)
         )
 
     return Markup(

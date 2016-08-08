@@ -14,9 +14,17 @@
 			<input name="digits" type="number" min="1" placeholder="Y tuple">
 			<input name="submit" type="Submit" value="Find it">
 		</form>
+		<form method="post" action="/upload" enctype="multipart/form-data">
+            <input name="tuples" type="file" accept="text/csv" placeholder="Upload a CSV">
+			<input name="submit" type="Submit" value="Find it">
+		</form>
         <div id="response">
             {% if result %}
-                Tuple: {{ occurrence }}, {{ digits }} => {{ result }}
+                <p>Tuple: {{ occurrence }}, {{ digits }} => {{ result }}</p>
+            {% elif results %}
+                {% for result in results %}
+                    <p>Tuple: {{ result['occurrence'] }}, {{ result['digits'] }} => {{ result['value'] }}</p>
+                {% endfor %}
             {% elif error %}
                 {{ error }}
             {%  endif %}
