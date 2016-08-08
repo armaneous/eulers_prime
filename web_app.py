@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
@@ -7,7 +7,7 @@ application = Flask(__name__)
 # Default route, root of website directory
 @application.route('/')
 def home():
-    return "Hello World!"
+    return render_template('home.html')
 
 
 # Enable REST calls directly to computation
