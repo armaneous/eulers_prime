@@ -1,5 +1,6 @@
 from decimal import *
 
+
 class PrimeFinder:
 
     def __init__(self, precision=170):
@@ -39,10 +40,4 @@ class PrimeFinder:
             x += 6
         return True
 
-user_input = raw_input("Enter x and y to find xth y-tuple prime in Euler's Number: ").split()
-finder = PrimeFinder()
-occurrence = int(user_input[0])
-tuple = int(user_input[1])
-
-print "%dth %d-digit prime: " % (occurrence, tuple), finder.prime_of_length(occurrence, tuple)
 
