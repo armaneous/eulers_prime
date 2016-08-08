@@ -2,52 +2,78 @@
 <html>
 	<head>
 		<title>This is a test!</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename ='style.css') }}">
 	</head>
 	<body>
-        <h1>Primes in Euler's Number</h1>
-        <section>
-            <p>This program is intended to determine the Xth occurrence of Y-tuple prime number.</p>
-            <p>For example, given two integer parameters, 3 and 5, the result will be the 3rd occurrence of a 5-digit prime in Euler's Number.</p>
-        </section>
-        <!--
-            Form for entering two values by inputs. Limit, as much as possible,
-            the type of values that can be input to numbers that are greater
-            than 1; there is no maximum.
-        -->
-		<form method="post" action="/">
-			<input name="occurrence" type="number" min="1" placeholder="Xth occurrence">
-			<input name="digits" type="number" min="1" placeholder="Y tuple">
-			<input name="submit" type="Submit" value="Find it">
-		</form>
-        <!--
-            Form for allowing the user to upload a file of type .txt, .text or
-            .csv and allowing a search based on a multi-line file of comma-
-            separated tuples. Tuples should be of size 2 and the first number
-            will be the occurrence count while the second will be the digit
-            count.
-        -->
-		<form method="post" action="/upload" enctype="multipart/form-data">
-            <input name="tuples" type="file" accept=".txt, .text, .csv" placeholder="Upload a CSV">
-			<input name="submit" type="Submit" value="Find it">
-		</form>
+        <main>
+            <h1>Primes in Euler's Number</h1>
+            <section>
+                <p>This program is intended to determine the Xth occurrence of Y-tuple prime number.</p>
+                <p>For example, given two integer parameters, 3 and 5, the result will be the 3rd occurrence of a 5-digit prime in Euler's Number.</p>
+            </section>
+            <!--
+                Form for entering two values by inputs. Limit, as much as possible,
+                the type of values that can be input to numbers that are greater
+                than 1; there is no maximum.
+            -->
+            <form method="post" action="/">
+                <strong>Search by inputs:</strong>
+                <input name="occurrence" type="number" min="1" placeholder="Xth occurrence">
+                <input name="digits" type="number" min="1" placeholder="Y tuple">
+                <input name="submit" type="Submit" value="Find it">
+            </form>
+            <!--
+                Form for allowing the user to upload a file of type .txt, .text or
+                .csv and allowing a search based on a multi-line file of comma-
+                separated tuples. Tuples should be of size 2 and the first number
+                will be the occurrence count while the second will be the digit
+                count.
+            -->
+            <form method="post" action="/upload" enctype="multipart/form-data">
+                <strong>Search by file upload:</strong>
+                <input name="tuples" type="file" accept=".txt, .text, .csv" placeholder="Upload a CSV">
+                <input name="submit" type="Submit" value="Find them all">
+            </form>
 
-        <!--
-            Returns messages appropriate to the values available. If there's
-            a result, return the result and the tuple entered to get there.
-            If there's a list of results, loop through the list and return
-            appropriate values. However, if there's an error message, print
-            the error message for the user.
-        -->
-        <div id="response">
-            {% if result %}
-                <p>Tuple: {{ occurrence }}, {{ digits }} => {{ result }}</p>
-            {% elif results %}
-                {% for result in results %}
-                    <p>Tuple: {{ result['occurrence'] }}, {{ result['digits'] }} => {{ result['value'] }}</p>
-                {% endfor %}
+            <aside>
+                <p>Bonus: try by URL! Try out the <a href="/5/10">tuple 5 and 10</a></p>
+            </aside>
+
+            <!--
+                Returns messages appropriate to the values available. If there's
+                a result, return the result and the tuple entered to get there.
+                If there's a list of results, loop through the list and return
+                appropriate values. However, if there's an error message, print
+                the error message for the user.
+            -->
+            {% if result or results %}
+                <table id="results" cellpadding="0" cellspacing="0" border="0" width="100%">
+                    <thead>
+                        <tr>
+                            <td colspan="4"><h2>Results</h2></td>
+                        </tr>
+                    </thead>
+                    {% if result %}
+                        <tr>
+                            <td class="text-right">Tuple: </td>
+                            <td class="text-right">{{ occurrence }},</td>
+                            <td class="text-right">{{ digits }} =></td>
+                            <td class="text-left">{{ result }}</td>
+                        </tr>
+                    {% elif results %}
+                        {% for result in results %}
+                            <tr>
+                                <td class="text-right">Tuple: </td>
+                                <td class="text-right">{{ result['occurrence'] }},</td>
+                                <td class="text-right">{{ result['digits'] }} =></td>
+                                <td class="text-left">{{ result['value'] }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
             {% elif error %}
-                {{ error }}
+                <p>{{ error }}</p>
             {%  endif %}
-        </div>
+        </main>
 	</body>
 </html>

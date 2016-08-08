@@ -76,7 +76,7 @@ def upload_search():
                 })
             else:
                 results.append({
-                    'occurrence': csv_tuple[0],
+                    'occurrence': csv_tuple[0].strip(),
                     'digits': '??',
                     'value': Markup('<strong>Error: Missing a value</strong>')
                 })
