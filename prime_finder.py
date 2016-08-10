@@ -8,7 +8,9 @@ class PrimeFinder:
      number is a prime and for finding the Xth
      occurrence of a Y-digit prime.
     """
-    PRIME_LIMIT = 15
+
+    """Set digit limit for prime numbers"""
+    DIGIT_LIMIT = 15
 
     def __init__(self, precision=200):
         """ Initializes object with default precision set to 200

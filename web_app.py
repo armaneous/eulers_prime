@@ -118,7 +118,7 @@ def search(occurrence, digits):
         )
 
     if occurrence > 0 and digits > 0:
-        if digits <= PrimeFinder.PRIME_LIMIT:
+        if digits <= PrimeFinder.DIGIT_LIMIT:
             result = finder.prime_of_length(occurrence, digits)
             if result < 0:
                 return Markup(
