@@ -67,19 +67,20 @@ def upload_search():
     results = []
     if request.method == 'POST':
         for line in request.files['tuples']:
-            csv_tuple = line.split(',')
-            if len(csv_tuple) > 1:
-                results.append({
-                    'occurrence': csv_tuple[0],
-                    'digits': csv_tuple[1],
-                    'value': search(csv_tuple[0], csv_tuple[1])
-                })
-            else:
-                results.append({
-                    'occurrence': csv_tuple[0].strip(),
-                    'digits': '??',
-                    'value': Markup('<strong>Error: Missing a value</strong>')
-                })
+            if line.strip() != "":
+                csv_tuple = line.split(',')
+                if len(csv_tuple) > 1:
+                    results.append({
+                        'occurrence': csv_tuple[0],
+                        'digits': csv_tuple[1],
+                        'value': search(csv_tuple[0], csv_tuple[1])
+                    })
+                else:
+                    results.append({
+                        'occurrence': csv_tuple[0].strip(),
+                        'digits': '??',
+                        'value': Markup('<strong>Error: Missing a value</strong>')
+                    })
     return render_template(
         'home.html',
         results=results
