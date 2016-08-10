@@ -119,16 +119,19 @@ def search(occurrence, digits):
         )
 
     if occurrence > 0 and digits > 0:
-        result = finder.prime_of_length(occurrence, digits)
-
-        if result < 0:
+        if digits <= PrimeFinder.DIGIT_LIMIT:
+            result = finder.prime_of_length(occurrence, digits)
+            if result < 0:
+                return Markup(
+                    "<strong>Sorry, couldn't find that with current precision</strong>"
+                )
             return Markup(
-                "<strong>Sorry, couldn't find that with current precision</strong>"
+                "<em>%d</em>" % result
             )
-
-        return Markup(
-            "<em>%d</em>" % result
-        )
+        else:
+            return Markup(
+                "<strong>Woah, there! Too many digits.</strong>"
+            )
 
     return Markup(
         "<strong>Error: values must be positive integers</strong>"
