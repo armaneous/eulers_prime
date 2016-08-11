@@ -3,6 +3,8 @@ from prime_finder import PrimeFinder
 
 # Declare and initialize application
 application = Flask(__name__)
+finder = PrimeFinder()
+eulers = finder.eulers_string
 
 
 # Default route, root of website directory
@@ -37,7 +39,8 @@ def rest_search(occurrence, digits):
         'home.html',
         occurrence=occurrence,
         digits=digits,
-        result=search(occurrence, digits)
+        result=search(occurrence, digits),
+        eulers=eulers
     )
 
 
@@ -83,7 +86,8 @@ def upload_search():
                     })
     return render_template(
         'home.html',
-        results=results
+        results=results,
+        eulers=eulers
     )
 
 
@@ -108,7 +112,6 @@ def search(occurrence, digits):
     :param digits: Y-digit size of any prime
     :return: search result if found, informative message otherwise
     """
-    finder = PrimeFinder()
 
     try:
         occurrence = int(occurrence)
@@ -144,4 +147,3 @@ if __name__ == "__main__":
     # removed before deploying a production app.
     application.debug = True
     application.run()
-
