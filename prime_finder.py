@@ -46,6 +46,13 @@ class PrimeFinder:
         """
         getcontext().prec = precision
 
+    def get_eulers_number(self):
+        """ Get the value, at current precision, of Euler's Number
+
+        :return: euler's number at current precision
+        """
+        return self.eulers_string
+
     def prime_of_length(self, count, size):
         """ Returns Xth Y-digit prime in Euler's Number
 
